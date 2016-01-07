@@ -2,7 +2,10 @@ package br.com.fabricadeprogramador.persistencia.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.fabricadeprogramador.persistencia.entidade.Usuario;
 
@@ -51,4 +54,69 @@ public class UsuarioDAO {
 		}
 	}
 
+	public void salvar(Usuario usuario) {
+		if (usuario.getId() != null) {
+			alterar(usuario);
+		} else {
+			cadastrar(usuario);
+		}
+	}
+	
+	/**
+	 * Busca de um regsitro no BD pelo número do Id do Usuário.
+	 * @param id É um inteiro que representa o número do Id do Usuário a ser buscado.
+	 * @return Um objeto Usuário quando encontra e nulo quando não.
+	 */
+	public Usuario buscarPorId(Integer id) {
+		String sql = "SELECT * FROM usuario WHERE id=?";
+		
+		try (PreparedStatement ps = conn.prepareStatement(sql)){
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			//Posicionando o cursor no primeiro registro
+			if(rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setId(rs.getInt("id"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				
+				return usuario;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Realiza a busca de todos registros da tabela de usuários
+	 * @return Uma lista de objetos Usuário contendo 0 elementos quando tiver registro
+	 * ou n elementos quando tiver resultado
+	 */
+	public List<Usuario> buscarTodos() {
+		String sql = "SELECT * FROM usuario ORDER BY id";
+		List<Usuario> lista = new ArrayList<Usuario>();
+		
+		try (PreparedStatement ps = conn.prepareStatement(sql)){
+			ResultSet rs = ps.executeQuery();
+			//Posicionando o cursor no primeiro registro
+			while(rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setId(rs.getInt("id"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				//Adicionando usuário na lista
+				lista.add(usuario);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return lista;
+	}
 }

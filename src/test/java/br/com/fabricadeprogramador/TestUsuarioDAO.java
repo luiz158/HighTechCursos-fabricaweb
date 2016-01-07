@@ -1,14 +1,31 @@
 package br.com.fabricadeprogramador;
 
+import java.util.Iterator;
+import java.util.List;
+
 import br.com.fabricadeprogramador.persistencia.entidade.Usuario;
 import br.com.fabricadeprogramador.persistencia.jdbc.UsuarioDAO;
 
 public class TestUsuarioDAO {
 
 	public static void main(String[] args) {
-		testExcluir();
+		testBuscarTodos();
 	}
 
+	private static void testBuscarPorId() {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.buscarPorId(4);
+		System.out.println(usuario);
+	}
+
+	private static void testBuscarTodos() {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		List<Usuario> lista = usuarioDAO.buscarTodos();
+		for (Usuario u : lista) {
+			System.out.println(u);
+		}
+	}
+	
 	public static void testCadastrar() {
 		// Criando o Usuário
 		Usuario usuario = new Usuario();
@@ -50,4 +67,16 @@ public class TestUsuarioDAO {
 		System.out.println("Excluído com sucesso!");
 	}
 	
+	public static void testSalvar() {
+		Usuario usuario = new Usuario();
+		// usuario.setId(1);
+		usuario.setNome("Marcelo");
+		usuario.setLogin("celo");
+		usuario.setSenha("123");
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		usuarioDAO.salvar(usuario);
+		
+		System.out.println("Salvo com sucesso!");
+	}
 }
