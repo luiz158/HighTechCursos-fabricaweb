@@ -119,4 +119,29 @@ public class UsuarioDAO {
 		
 		return lista;
 	}
+	
+	public Usuario autenticar(Usuario usuConculta) {
+		String sql = "SELECT * FROM usuario WHERE login=? AND senha=?";
+		
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, usuConculta.getLogin());
+			ps.setString(2, usuConculta.getSenha());
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setId(rs.getInt("id"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				
+				return usuario;
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 }
