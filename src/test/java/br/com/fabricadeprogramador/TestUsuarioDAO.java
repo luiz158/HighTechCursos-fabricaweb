@@ -1,0 +1,53 @@
+package br.com.fabricadeprogramador;
+
+import br.com.fabricadeprogramador.persistencia.entidade.Usuario;
+import br.com.fabricadeprogramador.persistencia.jdbc.UsuarioDAO;
+
+public class TestUsuarioDAO {
+
+	public static void main(String[] args) {
+		testExcluir();
+	}
+
+	public static void testCadastrar() {
+		// Criando o Usuário
+		Usuario usuario = new Usuario();
+		usuario.setNome("Jãozão");
+		usuario.setLogin("jzao");
+		usuario.setSenha("123");
+
+		// Inserindo Usuário no Banco de Dados
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		usuarioDAO.cadastrar(usuario);
+
+		System.out.println("Cadastrado com sucesso!");
+	}
+	
+	public static void testAlterar() {
+		//Alterar Usuário
+		Usuario usuario = new Usuario();
+		usuario.setId(3);
+		usuario.setNome("Jãozão da Silva");
+		usuario.setLogin("jzaoss");
+		usuario.setSenha("12345678");
+		
+		//Alterando Usuário no BD
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		usuarioDAO.alterar(usuario);
+		
+		System.out.println("Alterado com sucesso!");
+	}
+	
+	public static void testExcluir() {
+		//Alterar Usuário
+		Usuario usuario = new Usuario();
+		usuario.setId(3);
+		
+		//Alterando Usuário no BD
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		usuarioDAO.excluir(usuario);
+		
+		System.out.println("Excluído com sucesso!");
+	}
+	
+}
