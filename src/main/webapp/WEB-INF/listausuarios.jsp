@@ -14,34 +14,42 @@
 			location.href="usucontroller.do?acao=excluir&id=" + id;
 		}
 	}
+	
+	function novo() {
+		location.href='usucontroller.do?acao=cadastrar';
+	}
 </script>
 
 </head>
 <body>
 
+<%@include file="menu.jsp" %>
+<br />
+<br />
 <%
 	List<Usuario> lista = (List<Usuario>)request.getAttribute("lista");
 %>
 
 	<table border="1">
-	<tr>
-	<th>Id</th>
-	<th>Nome</th>
-	<th>Login</th>
-	<th>Ação</th>
-	</tr>
-	
-<%
-	for (Usuario u : lista) {
-		out.print("<tr>");
-		out.print("<td>" + u.getId() + "</td>");
-		out.print("<td>" + u.getNome() + "</td>");
-		out.print("<td>" + u.getLogin() + "</td>");
-		out.print("<td>" + "<a href='javascript:confirmaExclusao(" + u.getId() + ")'>Excluir</a> | <a href='usucontroller.do?acao=alterar&id=" + u.getId() + "'>Alterar" + "</td>");
-	}
-%>
-
+		<tr>
+		<th>Id</th>
+		<th>Nome</th>
+		<th>Login</th>
+		<th>Ação</th>
+		</tr>
+		
+		<%
+			for (Usuario u : lista) {
+				out.print("<tr>");
+				out.print("<td>" + u.getId() + "</td>");
+				out.print("<td>" + u.getNome() + "</td>");
+				out.print("<td>" + u.getLogin() + "</td>");
+				out.print("<td>" + "<a href='javascript:confirmaExclusao(" + u.getId() + ")'>Excluir</a> | <a href='usucontroller.do?acao=alterar&id=" + u.getId() + "'>Alterar" + "</td>");
+			}
+		%>
 	</table>
+	<br />
+	<input type="button" value="Novo" onclick="javascript:novo()" />
 
 </body>
 </html>

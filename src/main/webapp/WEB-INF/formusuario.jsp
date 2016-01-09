@@ -5,19 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>:: Form</title>
 </head>
 <body>
 
+<%@include file="menu.jsp" %>
+<br />
+<br />
 <%
 	Usuario usuario = (Usuario)request.getAttribute("usu");
 %>
 
 	<form action="usucontroller.do" method="post">
-		Id:		<input type="text" name="login" value="<%=usuario.getId()%>" />
-		Nome:	<input type="text" name="nome" value="<%=usuario.getNome()%>" />
-		Login:	<input type="text" name="login" value="<%=usuario.getLogin()%>" />
-		Senha:	<input type="password" name="senha" value="<%=usuario.getSenha()%>" /><br />
+		Id:		<input type="text" name="id" value="<%=usuario.getId()%>" readonly />
+		Nome:	<input type="text" name="nome" value="<%=usuario.getNome()%>" placeholder="Digite o seu nome" />
+		Login:	<input type="text" name="login" value="<%=usuario.getLogin()%>" placeholder="Crie um nome de usuário" />
+		Senha:	<input type="password" name="senha" value="<%=usuario.getSenha()%>" placeholder="Defina sua senha" />
 		
 		<input type="submit" value="Salvar" />
 	</form>

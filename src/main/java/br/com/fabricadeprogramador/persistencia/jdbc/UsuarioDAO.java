@@ -14,7 +14,7 @@ public class UsuarioDAO {
 	private Connection conn = ConexaoFactory.getConnection();
 
 	public void cadastrar(Usuario usuario) {		
-		String sql = "INSERT INTO usuario (nome, login, senha) VALUES (?, ?, ?)";		
+		String sql = "INSERT INTO usuario (nome, login, senha) VALUES (?, ?, md5(?))";		
 		try (PreparedStatement ps = conn.prepareStatement(sql)){						
 			// Substitui pelas ?'s no SQL
 			ps.setString(1, usuario.getNome());
@@ -28,7 +28,7 @@ public class UsuarioDAO {
 	}
 
 	public void alterar(Usuario usuario) {
-		String sql = "UPDATE usuario SET nome=?, login=?, senha=? WHERE id=?";		
+		String sql = "UPDATE usuario SET nome=?, login=?, senha=md5(?) WHERE id=?";		
 		try (PreparedStatement ps = conn.prepareStatement(sql)){						
 			// Substitui pelas ?'s no SQL
 			ps.setString(1, usuario.getNome());
@@ -121,7 +121,7 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario autenticar(Usuario usuConculta) {
-		String sql = "SELECT * FROM usuario WHERE login=? AND senha=?";
+		String sql = "SELECT * FROM usuario WHERE login=? AND senha=md5(?)";
 		
 		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, usuConculta.getLogin());
